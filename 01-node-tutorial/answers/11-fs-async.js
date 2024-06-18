@@ -28,4 +28,3 @@ writeFile('./temporary/fileB.txt', "This is line 1\n", (err, result) => {
   }
 });
 console.log("at end");
-
