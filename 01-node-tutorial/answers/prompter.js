@@ -21,7 +21,24 @@ const getBody = (req, callback) => {
 };
 
 // here, you could declare one or more variables to store what comes back from the form.
-let item = "Enter something below.";
+let randomNumber = Math.floor(Math.random() * 10) + 1;
+let item = `Enter number from 1 to 10 below.`;
+
+const guessNumber = (guess) =>{
+  if(guess > randomNumber)
+  {
+    return 'To big!';
+  }
+  else if(guess < randomNumber)
+  {
+    return 'To small';
+  }
+  else
+  {
+    randomNumber = Math.floor(Math.random() * 10) + 1;
+    return 'Good job! Let\'s do it again!';
+  }
+}
 
 // here, you can change the form below to modify the input fields and what is displayed.
 // This is just ordinary html with string interpolation.
@@ -30,7 +47,7 @@ const form = () => {
   <body>
   <p>${item}</p>
   <form method="POST">
-  <input name="item"></input>
+  <input name="guess" type="number" min="1" max="10"></input>
   <button type="submit">Submit</button>
   </form>
   </body>
@@ -44,8 +61,13 @@ const server = http.createServer((req, res) => {
     getBody(req, (body) => {
       console.log("The body of the post is ", body);
       // here, you can add your own logic
-      if (body["item"]) {
-        item = body["item"];
+      if (body["guess"]) {
+        const guess = parseInt(body["guess"], 10);
+        if (!isNaN(guess)) {
+          item = guessNumber(guess);
+        } else {
+          item = 'The number is not correct.';
+        }
       } else {
         item = "Nothing was entered.";
       }
