@@ -21,4 +21,3 @@ writeFile("./temporary/temp.txt", "first line\n")
  .catch((error) => {  
      console.log("An error occurred: ", error)  
  })
- 
