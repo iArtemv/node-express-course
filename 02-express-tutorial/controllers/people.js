@@ -54,4 +54,3 @@ const deletePerson = (req, res) => {
 }
   
 module.exports = {getPeople, addPerson, getPersonById, updatePerson, deletePerson};
-  
