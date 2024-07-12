@@ -1,10 +1,41 @@
 const express = require("express");
-const { products } = require("./data");
+const { products, people } = require("./data");
+const peopleRouter = require('./routes/people');
 const app = express();
+
+function logger(req, res, next){
+  const currentTime = new Date();
+  console.log(`${currentTime} ${req.method} ${req.url}`);
+  next();
+}
 
 app.listen(3000, () => {
   console.log("Server is running on port 3000");
 });
+
+app.use(logger);
+
+//app.get("/api/v1/people/", (req, res) => {
+//  res.json(people);
+//});
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+
+app.use("/api/v1/people", peopleRouter);
+
+// app.post("/api/v1/people/", (req, res) => {
+  
+//   const name = req.body.name;
+//   if(!name){
+//     res.status(400).json({success: false, message: "Please provide a name!"});
+//   }
+
+//   const newPerson = {id: people.length + 1, name: name};
+//   people.push(newPerson);
+
+//   res.status(201).json({ success: true, name: name });
+
+// });
 
 app.get("/api/v1/test", (req, res) => {
   res.json({ message: "It worked!" });
